@@ -681,6 +681,7 @@ for(let i = 0; i < companyList.Company.length; i++){
 getPackageInfo = async () => {
     container.style.display = "none";
     container.style.visibility = "hidden";
+    title.innerHTML = "조회중...";
     let companyCode = document.getElementById("companyInput").value;
     let packageCode = document.getElementById("packageNumberInput").value;
     let url = `${apiurlbase}?mode=package&companyCode=${companyCode}&packageCode=${packageCode}`;
