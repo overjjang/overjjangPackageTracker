@@ -9,13 +9,38 @@
     <title>버짱버짱 택배추적기</title>
 </head>
 <body class="w-100 m-auto">
-<main class="m-auto mt-5 m-auto">
+<main class="m-auto mt-5 m-auto" align="center">
     <h1 class="fs-2 fw-bold">버짱버짱 택배 추적기</h1>
 <div>
     <p id="title">운송장번호를 입력해주세요.</p>
 </div>
-    <div id="container">
-        <p id="packageInfo" class="">운송장번호를 입력해주세요.</p>
+    <div id="container" class="bg-light rounded">
+        <div id="packageInfoVisual" class="d-flex justify-content-center position-relative mt-2" >
+                <div class="col-xs-15 text-center">
+                    <div class="rounded-circle bg-light roundVisual" id="get"></div>
+                    <p>상품인수</p>
+                </div>
+                <div class="col-xs-15 text-center">
+                    <div class="rounded-circle bg-light roundVisual" id="move"></div>
+                    <p>상품이동중</p>
+                </div>
+                <div class="col-xs-15 text-center">
+                    <div class="rounded-circle bg-light roundVisual" id="arrive"></div>
+                    <p>배송지도착</p>
+                </div>
+                <div class="col-xs-15 text-center">
+                    <div class="rounded-circle bg-light roundVisual" id="start"></div>
+                    <p>배송출발</p>
+                </div>
+                <div class="col-xs-15 text-center">
+                    <div class="rounded-circle bg-light roundVisual" id="complete"></div>
+                    <p>배송 완료</p>
+                </div>
+        </div>
+        <div class="line"></div>
+        <div id="packageInfoHead" class="position-relative rounded p-1"></div>
+        <div class="line"></div>
+        <div id="packageInfoBody" ></div>
     </div>
     <br>
     <div id="packageNumberInputDIV">

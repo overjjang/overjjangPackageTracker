@@ -665,7 +665,9 @@ const companyList= {
     ]
 }
 
-const packageInfo = document.getElementById("packageInfo");
+const packageInfoHead = document.getElementById("packageInfoHead");
+const packageInfoBody = document.getElementById("packageInfoBody");
+const packageInfoVisual = document.getElementById("packageInfoVisual");
 const container = document.getElementById("container");
 const title = document.getElementById("title");
 
@@ -686,28 +688,68 @@ getPackageInfo = async () => {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+document.getElementById("get").classList.add("bg-light");
+document.getElementById("get").classList.remove("bg-isCompleted");document.getElementById("move").classList.add("bg-light");
+document.getElementById("move").classList.remove("bg-isCompleted");document.getElementById("arrive").classList.add("bg-light");
+document.getElementById("arrive").classList.remove("bg-isCompleted");document.getElementById("start").classList.add("bg-light");
+document.getElementById("start").classList.remove("bg-isCompleted");document.getElementById("complete").classList.add("bg-light");
+document.getElementById("complete").classList.remove("bg-isCompleted");packageInfoHead.classList.remove("bg-isCompleted");
             title.innerHTML = "배송 조회 결과";
             if(data.code === '105'){
                 title.innerHTML = data.msg;
-                title.innerHTML += `버짱의 API코드 하루 요청 건수가 초과되었으니 내일 다시 시도해주세요.(아니면 돈주던가)`;
+                // title.innerHTML += `버짱의 API코드 하루 요청 건수가 초과되었으니 내일 다시 시도해주세요.(아니면 돈주던가)`;
                 title.classList.add("error");
             }
             else if(data.level > 1) {
                 title.classList.remove("error");
-                packageInfo.innerHTML = "";
-                packageInfo.innerHTML += `<h2>상품명: ${data.itemName}</h2><h2>현재 상태: ${data.lastDetail.kind}</h2>`;
-                packageInfo.innerHTML += `<p>일자: ${data.lastDetail.timeString}</p>`;
-                packageInfo.innerHTML += `<p>현위치: ${data.lastDetail.where}</p>`;
-                if (data.estimate) packageInfo.innerHTML += `<p>배송예상시각: ${data.estimate}</p>`;
-                packageInfo.innerHTML += "<h3>배송 상세 내역</h3>";
+                packageInfoHead.innerHTML = "";
+                packageInfoBody.innerHTML = "";
+                packageInfoHead.innerHTML += `<h3>상품명: ${data.itemName}</h3><h3>현재 상태: ${data.lastDetail.kind}</h3>`;
+                packageInfoHead.innerHTML += `일자: ${data.lastDetail.timeString}<br>`;
+                packageInfoHead.innerHTML += `현위치: ${data.lastDetail.where} <br>`;
+                if (data.estimate) packageInfoHead.innerHTML += `배송예상시각: ${data.estimate} <br>`;
+                if (data.lastDetail.manName) packageInfoHead.innerHTML += `담당 기사: ${data.lastDetail.manName} <br>`;
+                if (data.lastDetail.telno) packageInfoHead.innerHTML += `기사 연락처: ${data.lastDetail.telno} <br>`;
+                packageInfoHead.innerHTML += ``;
+                packageInfoBody.innerHTML += "<h3>배송 상세 내역</h3>";
                 for (let i = 0; i < data.trackingDetails.length; i++) {
-                    packageInfo.innerHTML += `<p>${data.trackingDetails[i].timeString} - ${data.trackingDetails[i].kind} - ${data.trackingDetails[i].where}</p>`;
+                    packageInfoBody.innerHTML += `<div class="w-auto p-1 bg-${ i%2 === 1 ? "isCompleted" : "light"}">${data.trackingDetails[i].timeString} - ${data.trackingDetails[i].kind} - ${data.trackingDetails[i].where}</div>`;
                 }
                 container.style.display = "inline-block";
                 container.style.visibility = "visible";
+                if(data.level >= 2){
+                    document.getElementById("get").classList.remove("bg-light");
+                    document.getElementById("get").classList.add("bg-isCompleted");
+
+                }
+                if(data.level >= 3){
+                    document.getElementById("move").classList.remove("bg-light");
+                    document.getElementById("move").classList.add("bg-isCompleted");
+
+                }
+                if(data.level >= 4){
+                    document.getElementById("arrive").classList.remove("bg-light");
+                    document.getElementById("arrive").classList.add("bg-isCompleted");
+
+                }
+                if(data.level >= 5){
+                    document.getElementById("start").classList.remove("bg-light");
+                    document.getElementById("start").classList.add("bg-isCompleted");
+
+                }
+                if(data.level >= 6){
+                    document.getElementById("complete").classList.add("bg-isCompleted");
+                    document.getElementById("complete").classList.remove("bg-light");
+                    packageInfoHead.classList.add("bg-isCompleted");
+
+                }
             }
             else{
                 title.innerHTML = "잘못된 운송장번호거나 배송준비중인 상품입니다.";
+                title.classList.add("error");
+            }
+            if(data.code === 'noKeyRemain'){
+                title.innerHTML = "API코드 사용량 초과로 예시 데이터를 전송합니다."
                 title.classList.add("error");
             }
         });
