@@ -689,12 +689,12 @@ getPackageInfo = async () => {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-document.getElementById("get").classList.add("bg-light");
-document.getElementById("get").classList.remove("bg-isCompleted");document.getElementById("move").classList.add("bg-light");
-document.getElementById("move").classList.remove("bg-isCompleted");document.getElementById("arrive").classList.add("bg-light");
-document.getElementById("arrive").classList.remove("bg-isCompleted");document.getElementById("start").classList.add("bg-light");
-document.getElementById("start").classList.remove("bg-isCompleted");document.getElementById("complete").classList.add("bg-light");
-document.getElementById("complete").classList.remove("bg-isCompleted");packageInfoHead.classList.remove("bg-isCompleted");
+            document.getElementById("get").classList.add("bg-light");
+            document.getElementById("get").classList.remove("bg-isCompleted");document.getElementById("move").classList.add("bg-light");
+            document.getElementById("move").classList.remove("bg-isCompleted");document.getElementById("arrive").classList.add("bg-light");
+            document.getElementById("arrive").classList.remove("bg-isCompleted");document.getElementById("start").classList.add("bg-light");
+            document.getElementById("start").classList.remove("bg-isCompleted");document.getElementById("complete").classList.add("bg-light");
+            document.getElementById("complete").classList.remove("bg-isCompleted");packageInfoHead.classList.remove("bg-isCompleted");
             title.innerHTML = "배송 조회 결과";
             if(data.code === '105'){
                 title.innerHTML = data.msg;
@@ -750,7 +750,7 @@ document.getElementById("complete").classList.remove("bg-isCompleted");packageIn
                 title.classList.add("error");
             }
             if(data.code === 'noKeyRemain'){
-                title.innerHTML = "API코드 사용량 초과로 예시 데이터를 전송합니다."
+                title.innerHTML = `${data.msg}<br>예시 데이터를 전송합니다.`;
                 title.classList.add("error");
             }
         });
