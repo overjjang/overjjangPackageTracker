@@ -753,5 +753,10 @@ getPackageInfo = async () => {
                 title.innerHTML = `${data.msg}<br>예시 데이터를 전송합니다.`;
                 title.classList.add("error");
             }
+        })
+        .catch(error =>{
+            console.error('Error:', error);
+            title.innerHTML = "오류가 발생했습니다. 다시 시도해주세요.";
+            title.classList.add("error");
         });
 };
