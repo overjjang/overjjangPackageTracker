@@ -692,8 +692,8 @@ loadCookie();
 loadLastestPackage = ()=>{
     let companyCode = getCookie("companyCode");
     let packageCode = getCookie("packageCode");
-    document.getElementById("companyInput").selectedIndex = companyCode;
-    document.getElementById("packageNumberInput").value = packageCode+1;
+    document.getElementById("companyInput").selectedIndex = companyCode+1;
+    document.getElementById("packageNumberInput").value = packageCode;
     getPackageInfo();
 };
 
@@ -743,8 +743,8 @@ getPackageInfo = async () => {
             else if(data.level > 1) {
                 title.classList.remove("error");
                 packageInfoHead.innerHTML = "";
-                packageInfoHead.innerHTML += `<a class="fs-3"><a class="text-muted">상품명:</a> ${data.itemName}</a><a class="fs-3"><a class="text-muted">현재 상태:</a> ${data.lastDetail.kind}</a>`;
-                packageInfoHead.innerHTML += `<a class="fs-3"><a class="text-muted">현위치:</a> ${data.lastDetail.where}</a>`;
+                packageInfoHead.innerHTML += `<p class="fs-3"><a class="text-muted">상품명:</a> ${data.itemName}</p><p class="fs-3"><a class="text-muted">현재 상태:</a> ${data.lastDetail.kind}</p>`;
+                packageInfoHead.innerHTML += `<p class="fs-3"><a class="text-muted">현위치:</a> ${data.lastDetail.where}</p>`;
                 packageInfoHead.innerHTML += `일자: ${data.lastDetail.timeString}<br>`;
                 if (data.estimate) packageInfoHead.innerHTML += `배송예상시각: ${data.estimate} <br>`;
                 if (data.lastDetail.manName) packageInfoHead.innerHTML += `담당 기사: ${data.lastDetail.manName} <br>`;
