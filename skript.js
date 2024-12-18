@@ -743,13 +743,14 @@ getPackageInfo = async () => {
             else if(data.level > 1) {
                 title.classList.remove("error");
                 packageInfoHead.innerHTML = "";
-                packageInfoHead.innerHTML += `<h3>상품명: ${data.itemName}</h3><h3>현재 상태: ${data.lastDetail.kind}</h3>`;
-                packageInfoHead.innerHTML += `<h3>현위치: ${data.lastDetail.where}</h3>`;
+                packageInfoHead.innerHTML += `<a class="fs-3"><a class="text-muted">상품명:</a> ${data.itemName}</a><a class="fs-3"><a class="text-muted">현재 상태:</a> ${data.lastDetail.kind}</a>`;
+                packageInfoHead.innerHTML += `<a class="fs-3"><a class="text-muted">현위치:</a> ${data.lastDetail.where}</a>`;
                 packageInfoHead.innerHTML += `일자: ${data.lastDetail.timeString}<br>`;
                 if (data.estimate) packageInfoHead.innerHTML += `배송예상시각: ${data.estimate} <br>`;
                 if (data.lastDetail.manName) packageInfoHead.innerHTML += `담당 기사: ${data.lastDetail.manName} <br>`;
                 if (data.lastDetail.telno) packageInfoHead.innerHTML += `기사 연락처: ${data.lastDetail.telno} <br>`;
                 packageInfoHead.innerHTML += ``;
+                packageInfoBody.innerHTML = "";
                 packageInfoBody.innerHTML += "<h3>배송 상세 내역</h3>";
                 for (let i = 0; i < data.trackingDetails.length; i++) {
                     packageInfoBody.innerHTML += `<div class="w-auto p-1 bg-${ i%2 === 1 ? "isCompleted" : "light"}">${data.trackingDetails[i].timeString} - ${data.trackingDetails[i].kind} - ${data.trackingDetails[i].where}</div>`;
