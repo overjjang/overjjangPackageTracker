@@ -679,12 +679,14 @@ for(let i = 0; i < companyList.Company.length; i++){
     document.getElementById("companyInput").appendChild(option);
 }
 getPackageInfo = async () => {
+    title.classList.remove("error");
     container.style.display = "none";
     container.style.visibility = "hidden";
     title.innerHTML = "조회중...";
     let companyCode = document.getElementById("companyInput").value;
     let packageCode = document.getElementById("packageNumberInput").value;
     let url = `${apiurlbase}?mode=package&companyCode=${companyCode}&packageCode=${packageCode}`;
+    console.log("fetching data from: "+url);
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -706,8 +708,8 @@ getPackageInfo = async () => {
                 packageInfoHead.innerHTML = "";
                 packageInfoBody.innerHTML = "";
                 packageInfoHead.innerHTML += `<h3>상품명: ${data.itemName}</h3><h3>현재 상태: ${data.lastDetail.kind}</h3>`;
+                packageInfoHead.innerHTML += `<h3>현위치: ${data.lastDetail.where}</h3> <br>`;
                 packageInfoHead.innerHTML += `일자: ${data.lastDetail.timeString}<br>`;
-                packageInfoHead.innerHTML += `현위치: ${data.lastDetail.where} <br>`;
                 if (data.estimate) packageInfoHead.innerHTML += `배송예상시각: ${data.estimate} <br>`;
                 if (data.lastDetail.manName) packageInfoHead.innerHTML += `담당 기사: ${data.lastDetail.manName} <br>`;
                 if (data.lastDetail.telno) packageInfoHead.innerHTML += `기사 연락처: ${data.lastDetail.telno} <br>`;
