@@ -665,6 +665,38 @@ const companyList= {
     ]
 }
 
+// set cookie
+function setCookie(companyName, packageCode, exp) {
+    let date = new Date();
+    date.setTime(date.getTime() + exp*24*60*60*1000);
+    console.log(companyName, packageCode);
+    document.cookie = "companyCode" + '=' + companyName + ';expires=' + date.toUTCString() + ';path=/';
+    document.cookie = "packageCode" + '=' + packageCode + ';expires=' + date.toUTCString() + ';path=/';
+}
+function getCookie(name) {
+    let value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value ? value[2] : null;
+}
+
+function loadCookie(){
+    let companyCode = getCookie("companyCode");
+    let packageCode = getCookie("packageCode");
+    const cookieList = document.getElementById("lastestPackageNumber");
+    if(companyCode && packageCode){
+        console.log(companyCode, packageCode);
+        cookieList.innerHTML = `최근 조회한 운송장번호:<br><button id="cookieButton" onclick="loadLastestPackage()"> ${companyList.Company[companyCode].Name}-${packageCode}</button>`;
+    }
+}
+loadCookie();
+
+loadLastestPackage = ()=>{
+    let companyCode = getCookie("companyCode");
+    let packageCode = getCookie("packageCode");
+    document.getElementById("companyInput").selectedIndex = companyCode;
+    document.getElementById("packageNumberInput").value = packageCode;
+    getPackageInfo();
+};
+
 const packageInfoHead = document.getElementById("packageInfoHead");
 const packageInfoBody = document.getElementById("packageInfoBody");
 const packageInfoVisual = document.getElementById("packageInfoVisual");
@@ -685,6 +717,9 @@ getPackageInfo = async () => {
     title.innerHTML = "조회중...";
     let companyCode = document.getElementById("companyInput").value;
     let packageCode = document.getElementById("packageNumberInput").value;
+    let companyName = document.getElementById("companyInput").selectedIndex;
+    console.log(companyCode, packageCode, companyName);
+    setCookie(companyName, packageCode, 1);
     let url = `${apiurlbase}?mode=package&companyCode=${companyCode}&packageCode=${packageCode}`;
     console.log("fetching data from: "+url);
     fetch(url)
@@ -706,9 +741,8 @@ getPackageInfo = async () => {
             else if(data.level > 1) {
                 title.classList.remove("error");
                 packageInfoHead.innerHTML = "";
-                packageInfoBody.innerHTML = "";
                 packageInfoHead.innerHTML += `<h3>상품명: ${data.itemName}</h3><h3>현재 상태: ${data.lastDetail.kind}</h3>`;
-                packageInfoHead.innerHTML += `<h3>현위치: ${data.lastDetail.where}</h3> <br>`;
+                packageInfoHead.innerHTML += `<h3>현위치: ${data.lastDetail.where}</h3>`;
                 packageInfoHead.innerHTML += `일자: ${data.lastDetail.timeString}<br>`;
                 if (data.estimate) packageInfoHead.innerHTML += `배송예상시각: ${data.estimate} <br>`;
                 if (data.lastDetail.manName) packageInfoHead.innerHTML += `담당 기사: ${data.lastDetail.manName} <br>`;
