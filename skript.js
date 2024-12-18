@@ -693,9 +693,11 @@ loadLastestPackage = ()=>{
     let companyCode = getCookie("companyCode");
     let packageCode = getCookie("packageCode");
     document.getElementById("companyInput").selectedIndex = companyCode;
-    document.getElementById("packageNumberInput").value = packageCode;
+    document.getElementById("packageNumberInput").value = packageCode+1;
     getPackageInfo();
 };
+
+// page load
 
 const packageInfoHead = document.getElementById("packageInfoHead");
 const packageInfoBody = document.getElementById("packageInfoBody");
