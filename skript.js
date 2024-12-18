@@ -692,7 +692,7 @@ loadCookie();
 loadLastestPackage = ()=>{
     let companyCode = getCookie("companyCode");
     let packageCode = getCookie("packageCode");
-    document.getElementById("companyInput").selectedIndex = companyCode+1;
+    document.getElementById("companyInput").selectedIndex = companyCode;
     document.getElementById("packageNumberInput").value = packageCode;
     getPackageInfo();
 };
@@ -719,7 +719,7 @@ getPackageInfo = async () => {
     title.innerHTML = "조회중...";
     let companyCode = document.getElementById("companyInput").value;
     let packageCode = document.getElementById("packageNumberInput").value;
-    let companyName = document.getElementById("companyInput").selectedIndex;
+    let companyName = document.getElementById("companyInput").selectedIndex+1;
     console.log(companyCode, packageCode, companyName);
     setCookie(companyName, packageCode, 1);
     let url = `${apiurlbase}?mode=package&companyCode=${companyCode}&packageCode=${packageCode}`;
