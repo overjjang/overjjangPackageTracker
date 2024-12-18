@@ -684,7 +684,7 @@ function loadCookie(){
     const cookieList = document.getElementById("lastestPackageNumber");
     if(companyCode && packageCode){
         console.log(companyCode, packageCode);
-        cookieList.innerHTML = `최근 조회한 운송장번호:<br><button id="cookieButton" onclick="loadLastestPackage()"> ${companyList.Company[companyCode].Name}-${packageCode}</button>`;
+        cookieList.innerHTML = `최근 조회한 운송장번호:<br><button id="cookieButton" onclick="loadLastestPackage()"> ${companyList.Company[parseInt(companyCode)-1].Name}-${packageCode}</button>`;
     }
 }
 loadCookie();
@@ -719,7 +719,7 @@ getPackageInfo = async () => {
     title.innerHTML = "조회중...";
     let companyCode = document.getElementById("companyInput").value;
     let packageCode = document.getElementById("packageNumberInput").value;
-    let companyName = document.getElementById("companyInput").selectedIndex+1;
+    let companyName = document.getElementById("companyInput").selectedIndex;
     console.log(companyCode, packageCode, companyName);
     setCookie(companyName, packageCode, 1);
     let url = `${apiurlbase}?mode=package&companyCode=${companyCode}&packageCode=${packageCode}`;
